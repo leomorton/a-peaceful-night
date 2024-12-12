@@ -1,37 +1,42 @@
-import Link from "next/link";
+"use client";
+// import ActionButton from "./components/ActionButton";
+import { useEffect, useState } from "react";
 
 export default function HomePage() {
+  const [currentSparkle, setCurrentSparkle] = useState("");
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSparkle(makeMultipleLines(24));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+  const makeSparkleLine = (
+    character: string,
+    width: number,
+    probability: number,
+  ): string => {
+    return Array.from({ length: width }, (x, i) => {
+      // calculate distance from center
+      const distance = Math.abs(i - width / 2);
+      // adjust probability based on exponential distance from center
+      const adjustedProbability =
+        probability * Math.exp(-distance / (width / 15));
+      return Math.random() < adjustedProbability ? character : " ";
+    }).join("");
+  };
+  const makeMultipleLines = (count: number) => {
+    return Array.from({ length: count }, (x, i) => {
+      return makeSparkleLine(".", 100, 0.6 - i * 0.02);
+    }).join("\n");
+  };
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-        <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-          Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-        </h1>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/usage/first-steps"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">First Steps →</h3>
-            <div className="text-lg">
-              Just the basics - Everything you need to know to set up your
-              database and authentication.
-            </div>
-          </Link>
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/introduction"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">Documentation →</h3>
-            <div className="text-lg">
-              Learn more about Create T3 App, the libraries it uses, and how to
-              deploy it.
-            </div>
-          </Link>
-        </div>
-      </div>
+    <main className="flex min-h-screen flex-col items-center gap-4 overflow-hidden bg-black p-4 text-white">
+      <p className="font-mono text-sm">a peaceful night on the water...</p>
+      <br />
+      <br />
+      <p>O</p>
+      <pre>{currentSparkle}</pre>
     </main>
   );
 }
