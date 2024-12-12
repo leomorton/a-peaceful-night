@@ -8,7 +8,7 @@ export default function HomePage() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSparkle(makeMultipleLines(24));
-    }, 1000);
+    }, 2000);
     return () => clearInterval(interval);
   }, []);
   const makeSparkleLine = (
