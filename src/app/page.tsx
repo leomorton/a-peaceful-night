@@ -1,7 +1,6 @@
 "use client";
 // import ActionButton from "./components/ActionButton";
 import { useEffect, useState } from "react";
-import { set } from "zod";
 
 export default function HomePage() {
   const [skySparkle, setSkySparkle] = useState("");
@@ -9,10 +8,10 @@ export default function HomePage() {
 
   useEffect(() => {
     setSkySparkle(makeMultipleLines(12, 200, true, 0.01));
-    setWaterSparkle(makeMultipleLines(12, 50, false));
+    setWaterSparkle(makeMultipleLines(18, 30, false));
     const interval = setInterval(() => {
       // setSkySparkle(makeMultipleLines(14, 100, true, 0.05));
-      setWaterSparkle(makeMultipleLines(12, 50, false));
+      setWaterSparkle(makeMultipleLines(18, 30, false));
     }, 2000);
     return () => clearInterval(interval);
   }, []);
@@ -52,7 +51,7 @@ export default function HomePage() {
     <main className="flex min-h-screen flex-col items-center gap-4 overflow-hidden bg-black p-4 text-white">
       <p className="font-mono text-sm">a peaceful night on the water...</p>
       <pre>{skySparkle}</pre>
-      <p>O</p>
+      <p className="moon">⬤</p>
       {/* <pre>{makeSparkleLine(".", 100, 5)}</pre> */}
       <pre>{waterSparkle}</pre>
     </main>
